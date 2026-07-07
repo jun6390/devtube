@@ -3,6 +3,7 @@ import Main from "../components/section/Main";
 
 import { todayText } from "../data/today";
 import { Link } from "react-router-dom";
+import OptimizedImage from "../components/common/OptimizedImage";
 
 const Today = () => {
   return (
@@ -14,7 +15,14 @@ const Today = () => {
           <div className="today__inner" key={key}>
             <div className="today__thumb play__icon">
               <Link to={today.page}>
-                <img src={today.img} alt={today.title} />
+                <OptimizedImage
+                  src={today.img}
+                  alt={today.title}
+                  width="480"
+                  height="270"
+                  loading={key === 0 ? "eager" : "lazy"}
+                  fetchPriority={key === 0 ? "high" : undefined}
+                />
               </Link>
             </div>
             <div className="today__text">

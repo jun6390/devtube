@@ -21,6 +21,13 @@
   .video {
     margin-bottom: 20px;
   }
+
+  .video__thumb {
+    img {
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+  }
 }
 
 .video__inner.search {
@@ -42,9 +49,14 @@
         cursor: pointer;
         width: 100%;
         padding-bottom: 56.25%;
-        position: relative;
-        background-size: cover;
-        background-position: center;
+        overflow: hidden;
+
+        img {
+          position: absolute;
+          inset: 0;
+          height: 100%;
+          object-fit: cover;
+        }
       }
     }
 

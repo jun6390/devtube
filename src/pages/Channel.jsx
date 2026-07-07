@@ -7,6 +7,7 @@ import Main from '../components/section/Main';
 import VideoSearch from '../components/video/VideoSearch';
 import ChannelSkeleton from '../components/skeleton/ChannelSkeleton';
 import ErrorMessage from '../components/common/ErrorMessage';
+import OptimizedImage from '../components/common/OptimizedImage';
 
 import { CiBadgeDollar } from "react-icons/ci";
 import { CiMedal } from "react-icons/ci";
@@ -70,7 +71,16 @@ const Channel = () => {
                     <div className='channel__inner'>
                         <div className='channel__header' style={bannerUrl ? { backgroundImage: `url(${bannerUrl})` } : undefined}>
                             <div className='circle'>
-                                {thumbnailUrl && <img src={thumbnailUrl} alt={channelTitle} />}
+                                {thumbnailUrl && (
+                                    <OptimizedImage
+                                        src={thumbnailUrl}
+                                        alt={channelTitle}
+                                        width="176"
+                                        height="176"
+                                        loading="eager"
+                                        fetchPriority="high"
+                                    />
+                                )}
                             </div>
                         </div>
                         <div className='channel__info'>

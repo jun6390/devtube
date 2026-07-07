@@ -8,6 +8,7 @@ import "swiper/css/navigation";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
+import OptimizedImage from "../common/OptimizedImage";
 
 const Developer = ({ videos, title, id }) => {
   return (
@@ -56,7 +57,12 @@ const Developer = ({ videos, title, id }) => {
               <div className="developer">
                 <div className="developer__img play__icon">
                   <Link to={`/channel/${developer.channelId}`}>
-                    <img src={developer.img} alt={developer.name} />
+                    <OptimizedImage
+                      src={developer.img}
+                      alt={developer.name}
+                      width="176"
+                      height="176"
+                    />
                   </Link>
                 </div>
                 <div className="developer__info">

@@ -80,8 +80,10 @@ strong {
 }
 
 img {
+    display: block;
     vertical-align: top;
     width: 100%;
+    height: auto;
 }
 
 // 디자인 초기화
