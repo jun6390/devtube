@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { fetchFromAPI } from '../utils/api'
 
 import Main from '../components/section/Main';
+import VideoDetailSkeleton from '../components/skeleton/VideoDetailSkeleton';
 
 import { CiChat1 } from "react-icons/ci";
 import { CiStar } from "react-icons/ci";
@@ -27,13 +28,22 @@ const formatVideoTitle = (title) => {
 const Video = () => {
     const { videoId } = useParams();
     const [ videoDetail, setVideoDetail ] = useState(null);
+    const [ loading, setLoading ] = useState(true);
 
     useEffect(() => {
+        setLoading(true);
+        setVideoDetail(null);
+
         fetchFromAPI(`videos?part=snippet,statistics&id=${videoId}`)
-        .then((data) => {
-            console.log(data);
-            setVideoDetail(data.items[0])
-        })
+            .then((data) => {
+                setVideoDetail(data?.items?.[0] || null)
+            })
+            .catch((error) => {
+                console.error('Error fetching data', error);
+            })
+            .finally(() => {
+                setLoading(false);
+            })
     }, [videoId]);
 
     return (
@@ -42,7 +52,9 @@ const Video = () => {
             description="유튜브 비디오 영상을 볼 수 있습니다.">
             
             <section id='videoViewPage'>
-                {videoDetail && (
+                {loading ? (
+                    <VideoDetailSkeleton />
+                ) : videoDetail && (
                     <div className='video__view'>
                         <div className='video__play'>
                             <iframe

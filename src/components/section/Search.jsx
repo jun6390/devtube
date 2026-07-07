@@ -6,9 +6,10 @@ const Search = () => {
     const navigate = useNavigate();
 
     const handleSearch = () => {
-        console.log(searchKeyword);
-        if(searchKeyword) {
-            navigate(`/search/${searchKeyword}`);
+        const trimmedKeyword = searchKeyword.trim();
+
+        if(trimmedKeyword) {
+            navigate(`/search/${trimmedKeyword}`);
             setSearchKeyword('');
         }
     }
@@ -26,6 +27,7 @@ const Search = () => {
                     autoComplete='off'
                     className='search__input'
                     placeholder='검색'
+                    value={searchKeyword}
                     onChange={e => setSearchKeyword(e.target.value)}
                     onKeyDown={e => {
                         if(e.key === 'Enter') {

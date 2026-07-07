@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import Main from '../components/section/Main'
 
 import VideoSearch from '../components/video/VideoSearch'
+import VideoSearchSkeleton from '../components/skeleton/VideoSearchSkeleton'
 import { fetchFromAPI } from '../utils/api'
 
 const Search = () => {
@@ -12,9 +13,9 @@ const Search = () => {
     const [ loading, setLoading ] = useState(true);
     
     useEffect(() => {
+        setLoading(true);
         setVideos([]);
         fetchVideos(searchId);
-        setLoading(true);
     }, [searchId]);
 
         const fetchVideos = (query, pageToken = '') => {
@@ -25,32 +26,34 @@ const Search = () => {
                     setLoading(false);
                 })
                 .catch((error) => {
-                    console.log('Error fetching data', error);
+                    console.error('Error fetching data', error);
                     setLoading(false);
                 })
         }
 
-        const handelLoadMore = () => {
+        const handleLoadMore = () => {
             if(nextPageToken) {
                 fetchVideos(searchId, nextPageToken);
             }
         }
-
-        const searchPageClass = loading ? 'isLoading' : 'isLoaded'
 
     return (
         <Main 
             title = "유투브 검색"
             description="유튜브 검색 결과 페이지입니다.">
             
-            <section id='searchPage' className={searchPageClass}>
+            <section id='searchPage'>
                 <h2><em>{searchId}</em> 검색 결과입니다.</h2>
                 <div className="video__inner search">
-                    <VideoSearch videos={videos} />
+                    {loading ? (
+                        <VideoSearchSkeleton count={8} />
+                    ) : (
+                        <VideoSearch videos={videos} />
+                    )}
                 </div>
                 <div className='video__more'>
-                    {nextPageToken && (
-                        <button onClick={handelLoadMore}>더보기</button>
+                    {!loading && nextPageToken && (
+                        <button onClick={handleLoadMore}>더보기</button>
                     )}
                 </div>
             </section>
