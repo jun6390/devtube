@@ -1,41 +1,39 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import Main from '../components/section/Main'
 
 import VideoSearch from '../components/video/VideoSearch'
 import VideoSearchSkeleton from '../components/skeleton/VideoSearchSkeleton'
+import ErrorMessage from '../components/common/ErrorMessage'
 import { fetchFromAPI } from '../utils/api'
 
 const Search = () => {
     const { searchId } = useParams();
-    const [ videos, setVideos ] = useState([]);
-    const [ nextPageToken, setNextPageToken] = useState(null);
-    const [ loading, setLoading ] = useState(true);
-    
-    useEffect(() => {
-        setLoading(true);
-        setVideos([]);
-        fetchVideos(searchId);
-    }, [searchId]);
 
-        const fetchVideos = (query, pageToken = '') => {
-            fetchFromAPI(`search?part=snippet&type=video&q=${query}&pageToken=${pageToken}`)
-                .then((data) => {
-                    setNextPageToken(data.nextPageToken);
-                    setVideos((preVideos) => [...preVideos, ...data.items]);
-                    setLoading(false);
-                })
-                .catch((error) => {
-                    console.error('Error fetching data', error);
-                    setLoading(false);
-                })
-        }
+    const {
+        data,
+        error,
+        fetchNextPage,
+        hasNextPage,
+        isError,
+        isFetchingNextPage,
+        isLoading,
+        refetch,
+    } = useInfiniteQuery({
+        queryKey: ['searchVideos', searchId],
+        queryFn: ({ pageParam = '', signal }) => {
+            const query = encodeURIComponent(searchId);
+            const pageToken = pageParam ? `&pageToken=${pageParam}` : '';
 
-        const handleLoadMore = () => {
-            if(nextPageToken) {
-                fetchVideos(searchId, nextPageToken);
-            }
-        }
+            return fetchFromAPI(`search?part=snippet&type=video&q=${query}${pageToken}`, { signal });
+        },
+        enabled: Boolean(searchId),
+        initialPageParam: '',
+        getNextPageParam: (lastPage) => lastPage?.nextPageToken || undefined,
+    });
+
+    const videos = data?.pages.flatMap((page) => page?.items || []) || [];
 
     return (
         <Main 
@@ -44,16 +42,22 @@ const Search = () => {
             
             <section id='searchPage'>
                 <h2><em>{searchId}</em> 검색 결과입니다.</h2>
-                <div className="video__inner search">
-                    {loading ? (
+                {isLoading ? (
+                    <div className="video__inner search">
                         <VideoSearchSkeleton count={8} />
-                    ) : (
+                    </div>
+                ) : isError ? (
+                    <ErrorMessage error={error} onRetry={() => refetch()} />
+                ) : (
+                    <div className="video__inner search">
                         <VideoSearch videos={videos} />
-                    )}
-                </div>
+                    </div>
+                )}
                 <div className='video__more'>
-                    {!loading && nextPageToken && (
-                        <button onClick={handleLoadMore}>더보기</button>
+                    {!isLoading && !isError && hasNextPage && (
+                        <button type="button" onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
+                            {isFetchingNextPage ? '불러오는 중...' : '더보기'}
+                        </button>
                     )}
                 </div>
             </section>
