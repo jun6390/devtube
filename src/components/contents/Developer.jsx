@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { Link } from "react-router-dom";
 
@@ -10,18 +10,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 
 const Developer = ({ videos, title, id }) => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 400);
-  }, []);
-
-  const developerClass = loading ? "isLoading" : "isLoaded";
-
   return (
-    <section id={id} className={developerClass}>
+    <section id={id}>
       <h2>{title}</h2>
       <div className="developer__inner">
         <Swiper

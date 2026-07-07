@@ -1,20 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { Link } from "react-router-dom";
 
 const Today = ({ videos, id }) => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 300);
-  }, []);
-
-  const todayClass = loading ? "isLoading" : "isLoaded";
-
   return (
-    <section id={id} className={todayClass}>
+    <section id={id}>
       <div className="today__inner">
         <div className="today__thumb play__icon">
           <Link to={videos[0].page}>

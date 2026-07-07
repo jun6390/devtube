@@ -4,6 +4,7 @@ import { fetchFromAPI } from '../utils/api'
 
 import Main from '../components/section/Main';
 import VideoSearch from '../components/video/VideoSearch';
+import ChannelSkeleton from '../components/skeleton/ChannelSkeleton';
 
 import { CiBadgeDollar } from "react-icons/ci";
 import { CiMedal } from "react-icons/ci";
@@ -18,15 +19,20 @@ const Channel = () => {
 
     useEffect(() => {
         const fetchResults = async () => {
+            setLoading(true);
+            setChannelDetail(undefined);
+            setChannelVideo([]);
+            setNextPageToken(null);
+
             try {
                 const data = await fetchFromAPI(`channels?part=snippet,statistics,brandingSettings&id=${channelId}`);
-                setChannelDetail(data.items[0]);
+                setChannelDetail(data?.items?.[0]);
 
                 const videosData = await fetchFromAPI(`search?channelId=${channelId}&part=snippet%2Cid&order=date`);
-                setChannelVideo(videosData?.items);
+                setChannelVideo(videosData?.items || []);
                 setNextPageToken(videosData?.nextPageToken);
             } catch(error) {
-                console.log('Error fetching data', error)
+                console.error('Error fetching data', error)
             } finally {
                 setLoading(false);
             }
@@ -37,20 +43,20 @@ const Channel = () => {
     const loadMoreVideos = async () => {
         if(nextPageToken) {
             const videosData = await fetchFromAPI(`search?channelId=${channelId}&part=snippet%2Cid&order=date&pageToken=${nextPageToken}`);
-            setChannelVideo(prevVideos => [...prevVideos, ...videosData.items]);
+            setChannelVideo(prevVideos => [...prevVideos, ...(videosData?.items || [])]);
             setNextPageToken(videosData?.nextPageToken);
         }
     }
-
-    const channelPageClass = loading ? 'isLoading' : 'isLoaded'
 
     return (
         <Main 
             title = "유튜브 채널"
             description="유튜브 채널페이지입니다.">
             
-            <section id='channel' className={channelPageClass}>
-                {channelDetail && (
+            <section id='channel'>
+                {loading ? (
+                    <ChannelSkeleton />
+                ) : channelDetail && (
                     <div className='channel__inner'>
                         <div className='channel__header' style={{ backgroundImage: `url(${channelDetail.brandingSettings.image.bannerExternalUrl})` }}>
                             <div className='circle'>
