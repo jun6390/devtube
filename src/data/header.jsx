@@ -91,17 +91,17 @@ export const searchKeyword = [
 
 export const snsLink = [
   {
-    title: "github",
+    title: "GitHub",
     url: "https://github.com/haejunbag131-maker",
     icon: <AiFillGithub />,
   },
   {
-    title: "youtube",
+    title: "YouTube",
     url: "https://www.youtube.com/@%EB%B0%95%ED%95%B4%EC%A4%80-e7v",
     icon: <AiFillYoutube />,
   },
   {
-    title: "instagram",
+    title: "Instagram",
     url: "https://www.instagram.com/pxhxjxn",
     icon: <AiOutlineInstagram />,
   },

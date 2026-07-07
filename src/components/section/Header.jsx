@@ -12,15 +12,17 @@ const Header = () => {
   };
 
   return (
-    <header id="header" role="banner" className={isMenuActive ? "active" : ""}>
+    <header id="header" className={isMenuActive ? "active" : ""}>
       <button
         className="header__hamburger"
         onClick={toggleMenu}
-        aria-label="메뉴 열기"
+        aria-label={isMenuActive ? "메뉴 닫기" : "메뉴 열기"}
+        aria-controls="primary-navigation"
+        aria-expanded={isMenuActive}
       >
-        <span></span>
-        <span></span>
-        <span></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
       </button>
 
       <Logo />

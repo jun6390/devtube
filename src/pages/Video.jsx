@@ -47,8 +47,8 @@ const Video = () => {
 
     return (
         <Main 
-            title = "유튜브 비디오 영상"
-            description="유튜브 비디오 영상을 볼 수 있습니다.">
+            title = {videoDetail?.snippet?.title || "유튜브 비디오 영상"}
+            description={videoDetail?.snippet?.description || "유튜브 비디오 영상을 볼 수 있습니다."}>
             
             <section id='videoViewPage'>
                 {isLoading ? (
@@ -66,9 +66,11 @@ const Video = () => {
                         <div className='video__play'>
                             <iframe
                                 src={`https://www.youtube.com/embed/${videoId}?controls=1&rel=0&playsinline=1`}
-                                title={videoDetail.snippet.title}
+                                title={`${videoDetail.snippet.title} 영상 플레이어`}
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowFullScreen
+                                loading="lazy"
+                                referrerPolicy="strict-origin-when-cross-origin"
                             />
                         </div>
                         <div className='video__info'>
@@ -80,9 +82,18 @@ const Video = () => {
                                     <Link to={`/channel/${videoDetail.snippet.channelId}`}>{videoDetail.snippet.channelTitle}</Link>
                                 </div>
                                 <div className='count'>
-                                    <span className='view'><CiRead />{videoDetail.statistics.viewCount}</span>
-                                    <span className='like'><CiStar />{videoDetail.statistics.likeCount}</span>
-                                    <span className='comment'><CiChat1 />{videoDetail.statistics.commentCount}</span>
+                                    <span className='view' aria-label={`조회수 ${videoDetail.statistics.viewCount}`}>
+                                        <CiRead aria-hidden="true" focusable="false" />
+                                        {videoDetail.statistics.viewCount}
+                                    </span>
+                                    <span className='like' aria-label={`좋아요 ${videoDetail.statistics.likeCount}`}>
+                                        <CiStar aria-hidden="true" focusable="false" />
+                                        {videoDetail.statistics.likeCount}
+                                    </span>
+                                    <span className='comment' aria-label={`댓글 ${videoDetail.statistics.commentCount}`}>
+                                        <CiChat1 aria-hidden="true" focusable="false" />
+                                        {videoDetail.statistics.commentCount}
+                                    </span>
                                 </div>
                             </div>
                             <div className='video__desc'>

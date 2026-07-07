@@ -10,7 +10,7 @@ const ErrorMessage = ({ error, message, title, onRetry }) => {
       <strong>{title || getApiErrorTitle(error)}</strong>
       <p>{message || getApiErrorMessage(error)}</p>
       {showRetryButton && (
-        <button type="button" onClick={onRetry}>
+        <button type="button" onClick={onRetry} aria-label="데이터 다시 불러오기">
           다시 시도
         </button>
       )}

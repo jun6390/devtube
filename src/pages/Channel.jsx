@@ -53,8 +53,8 @@ const Channel = () => {
 
     return (
         <Main 
-            title = "유튜브 채널"
-            description="유튜브 채널페이지입니다.">
+            title = {channelDetail?.snippet?.title || "유튜브 채널"}
+            description={channelDetail?.snippet?.description || "유튜브 채널페이지입니다."}>
             
             <section id='channel'>
                 {isLoading ? (
@@ -87,9 +87,18 @@ const Channel = () => {
                             <h3 className='title'>{channelTitle}</h3>
                             <p className='desc'>{channelDetail.snippet?.description}</p>
                             <div className='info'>
-                                <span><CiBadgeDollar />{channelDetail.statistics?.subscriberCount}</span>
-                                <span><CiMedal />{channelDetail.statistics?.videoCount}</span>
-                                <span><CiRead />{channelDetail.statistics?.viewCount}</span>
+                                <span aria-label={`구독자 수 ${channelDetail.statistics?.subscriberCount}`}>
+                                    <CiBadgeDollar aria-hidden="true" focusable="false" />
+                                    {channelDetail.statistics?.subscriberCount}
+                                </span>
+                                <span aria-label={`영상 수 ${channelDetail.statistics?.videoCount}`}>
+                                    <CiMedal aria-hidden="true" focusable="false" />
+                                    {channelDetail.statistics?.videoCount}
+                                </span>
+                                <span aria-label={`조회수 ${channelDetail.statistics?.viewCount}`}>
+                                    <CiRead aria-hidden="true" focusable="false" />
+                                    {channelDetail.statistics?.viewCount}
+                                </span>
                             </div>
                         </div>
                         <div className='channel__video video__inner search'>
@@ -101,6 +110,12 @@ const Channel = () => {
                                     type="button"
                                     onClick={() => channelVideosQuery.fetchNextPage()}
                                     disabled={channelVideosQuery.isFetchingNextPage}
+                                    aria-busy={channelVideosQuery.isFetchingNextPage}
+                                    aria-label={
+                                        channelVideosQuery.isFetchingNextPage
+                                            ? '채널 영상을 추가로 불러오는 중'
+                                            : '채널 영상 더보기'
+                                    }
                                 >
                                     {channelVideosQuery.isFetchingNextPage ? '불러오는 중...' : '더보기'}
                                 </button>

@@ -5,7 +5,9 @@ const Search = () => {
     const [ searchKeyword, setSearchKeyword ] = useState('');
     const navigate = useNavigate();
 
-    const handleSearch = () => {
+    const handleSearch = (event) => {
+        event?.preventDefault();
+
         const trimmedKeyword = searchKeyword.trim();
 
         if(trimmedKeyword) {
@@ -15,7 +17,7 @@ const Search = () => {
     }
 
     return (
-        <div id='search'>
+        <form id='search' role='search' aria-label='동영상 검색' onSubmit={handleSearch}>
             <div className='search__inner'>
                 <label htmlFor='searchInput'>
                     <span className='ir'>검색</span>
@@ -31,12 +33,12 @@ const Search = () => {
                     onChange={e => setSearchKeyword(e.target.value)}
                     onKeyDown={e => {
                         if(e.key === 'Enter') {
-                            handleSearch();
+                            handleSearch(e);
                         }
                     }}   
                 />
             </div>
-        </div>
+        </form>
     )
 }
 
