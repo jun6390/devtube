@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
+import OptimizedImage from "../common/OptimizedImage";
 
 const Today = ({ videos, id }) => {
   return (
@@ -8,7 +9,14 @@ const Today = ({ videos, id }) => {
       <div className="today__inner">
         <div className="today__thumb play__icon">
           <Link to={videos[0].page}>
-            <img src={videos[0].img} alt={videos[0].title} />
+            <OptimizedImage
+              src={videos[0].img}
+              alt={videos[0].title}
+              width="480"
+              height="270"
+              loading="eager"
+              fetchPriority="high"
+            />
           </Link>
         </div>
         <div className="today__text">

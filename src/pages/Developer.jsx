@@ -3,6 +3,7 @@ import Main from "../components/section/Main";
 
 import { developerText } from "../data/developer";
 import { Link } from "react-router-dom";
+import OptimizedImage from "../components/common/OptimizedImage";
 
 const Developer = () => {
   return (
@@ -14,7 +15,14 @@ const Developer = () => {
             <div className="developer" key={key}>
               <div className="developer__img play__icon">
                 <Link to={`/channel/${developer.channelId}`}>
-                  <img src={developer.img} alt={developer.name} />
+                  <OptimizedImage
+                    src={developer.img}
+                    alt={developer.name}
+                    width="176"
+                    height="176"
+                    loading={key < 8 ? "eager" : "lazy"}
+                    fetchPriority={key < 4 ? "high" : undefined}
+                  />
                 </Link>
               </div>
               <div className="developer__info">

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import OptimizedImage from '../common/OptimizedImage'
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -46,7 +47,12 @@ const VideoSlider = ({id, title, videos}) => {
                         <div className="video">
                             <div className="video__thumb play__icon">
                                 <Link to={`/video/${video.videoId}`}>
-                                    <img src={video.img} alt={video.title} />
+                                    <OptimizedImage
+                                        src={video.img}
+                                        alt={video.title}
+                                        width="480"
+                                        height="270"
+                                    />
                                 </Link>
                             </div>
                         </div>
