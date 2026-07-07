@@ -1,46 +1,11 @@
 /* ============================
-   NEXON Lv1 Gothic (TTF)
+   NanumSquareNeo (WOFF2)
 ============================ */
-@font-face {
-    font-family: "nexonLv1";
-    font-weight: 300;
-    font-style: normal;
-    src: url("../../fonts/NEXONLv1GothicLight.ttf") format("truetype");
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "nexonLv1";
-    font-weight: 400;
-    font-style: normal;
-    src: url("../../fonts/NEXONLv1GothicRegular.ttf") format("truetype");
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "nexonLv1";
-    font-weight: 700;
-    font-style: normal;
-    src: url("../../fonts/NEXONLv1GothicBold.ttf") format("truetype");
-    font-display: swap;
-}
-
-/* ============================
-   NanumSquareNeo (TTF)
-============================ */
-@font-face {
-    font-family: "nanumSquareNeo";
-    font-weight: 300;
-    font-style: normal;
-    src: url("../../fonts/NanumSquareNeo-aLt.ttf") format("truetype");
-    font-display: swap;
-}
-
 @font-face {
     font-family: "nanumSquareNeo";
     font-weight: 400;
     font-style: normal;
-    src: url("../../fonts/NanumSquareNeo-bRg.ttf") format("truetype");
+    src: url("../../fonts/NanumSquareNeo-bRg.woff2") format("woff2");
     font-display: swap;
 }
 
@@ -48,7 +13,7 @@
     font-family: "nanumSquareNeo";
     font-weight: 700;
     font-style: normal;
-    src: url("../../fonts/NanumSquareNeo-cBd.ttf") format("truetype");
+    src: url("../../fonts/NanumSquareNeo-cBd.woff2") format("woff2");
     font-display: swap;
 }
 
@@ -56,14 +21,6 @@
     font-family: "nanumSquareNeo";
     font-weight: 800;
     font-style: normal;
-    src: url("../../fonts/NanumSquareNeo-dEb.ttf") format("truetype");
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "nanumSquareNeo";
-    font-weight: 900;
-    font-style: normal;
-    src: url("../../fonts/NanumSquareNeo-eHv.ttf") format("truetype");
+    src: url("../../fonts/NanumSquareNeo-dEb.woff2") format("woff2");
     font-display: swap;
 }
