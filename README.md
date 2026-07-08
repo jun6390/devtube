@@ -4,7 +4,7 @@
 
 ## 배포 링크
 
-- Demo: https://joontube.vercel.app/
+- Demo: https://devtube-fe.vercel.app/
 
 ## 프로젝트 소개
 
