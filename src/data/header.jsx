@@ -92,7 +92,7 @@ export const searchKeyword = [
 export const snsLink = [
   {
     title: "GitHub",
-    url: "https://github.com/haejunbag131-maker",
+    url: "https://github.com/jun6390",
     icon: <AiFillGithub />,
   },
   {
